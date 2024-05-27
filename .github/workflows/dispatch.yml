@@ -6,14 +6,11 @@ on:
 
 jobs:
   dispatch-playwright-tests:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run Playwright Tests
-      uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
-      with:
-        tag: 'e2e'
-        playwright_repo: 'afonte15/playwright-demo'
-        playwright_repo_ref: 'main'
-        run_command: 'npx playwright test --grep @'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+    with:
+      tag: 'e2e'
+      playwright_repo: 'afonte15/playwright-demo'
+      playwright_repo_ref: 'main'
+      run_command: 'npx playwright test --grep @'
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
