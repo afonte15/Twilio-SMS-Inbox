@@ -8,7 +8,7 @@ jobs:
   dispatch-playwright-tests:
     uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
     with:
-      tag: 'e2e'
+      tag: 'e2'
       playwright_repo: 'afonte15/playwright-demo'
       playwright_repo_ref: 'main'
       run_command: 'npx playwright test --grep @'
