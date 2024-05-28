@@ -14,6 +14,6 @@ jobs:
       tag: 'e2e'
       playwright_repo: 'afonte15/playwright-demo'
       playwright_repo_ref: 'main'
-      run_command: 'npx playwright test --grep @'
+      run_command: 'npx playwright test'
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
