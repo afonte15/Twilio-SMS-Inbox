@@ -18,5 +18,5 @@ jobs:
           playwright_repo: 'afonte15/playwright-demo'
           playwright_repo_ref: 'main'
           run_command: 'npx playwright test --grep @'
-          secrets:
-          REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
