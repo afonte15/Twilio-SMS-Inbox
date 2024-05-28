@@ -13,4 +13,4 @@ jobs:
       playwright_repo_ref: 'main'
       run_command: 'npx playwright test --grep @'
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
