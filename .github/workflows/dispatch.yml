@@ -14,6 +14,7 @@ on:
         description: 'Tag to filter tests'
         required: true
         type: string
+        default: 'e2e'
       playwright_repo:
         description: 'Playwright Automation Repository'
         required: true
