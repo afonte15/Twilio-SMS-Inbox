@@ -31,23 +31,13 @@ permissions:
 
 jobs:
   dispatch-playwright-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Playwright CI/CD Repository
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.event.inputs.playwright_repo }}
-          ref: ${{ github.event.inputs.playwright_repo_ref }}
-      
-      - name: Run Tagged Playwright Tests
-        uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
-        with:
-          tag: ${{ github.event.inputs.tag }}
-          playwright_repo: ${{ github.event.inputs.playwright_repo }}
-          playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
-          environment: ${{ github.event.inputs.environment }}
-          
-    env:
+    uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+    with:
+      tag: ${{ github.event.inputs.tag }}
+      playwright_repo: ${{ github.event.inputs.playwright_repo }}
+      playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
+      environment: ${{ github.event.inputs.environment }}
+    secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
       QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
