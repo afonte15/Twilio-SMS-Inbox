@@ -27,7 +27,7 @@ on:
         default: 'main'
 
 permissions:
-  contents: write
+  contents: writ
 
 jobs:
   dispatch-playwright-tests:
