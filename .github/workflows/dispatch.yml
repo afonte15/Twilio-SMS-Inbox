@@ -43,7 +43,7 @@ jobs:
       environment: ${{ github.event.inputs.environment }}
       run_command: ${{ github.event.inputs.run_command }}
     secrets:
-      REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN  }}
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
       QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
       STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
