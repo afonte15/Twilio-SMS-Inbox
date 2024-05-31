@@ -39,7 +39,7 @@ jobs:
       uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
       with:
         tag: ${{ github.event.inputs.tag || 'e2e' }}
-        environment: ${{ github.event.inputs.environment || 'qa' }}
+        environment: ${{ github.event.inputs.environment || 'staging' }}
         playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo' }}
         playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main' }}
         run_command: ${{ github.event.inputs.run_command || 'npx playwright test' }}
