@@ -33,6 +33,13 @@ on:
         required: true
         type: string
         default: 'npx playwright test'
+  workflow_call:
+          inputs:
+            environment:
+              description: 'Environment to rollout to. QA is default'
+              type: string
+              required: true
+              default: 'qa'
 
 permissions:
   contents: write
