@@ -9,7 +9,7 @@ on:
         description: 'Environment to run the tests against'
         required: true
         type: string
-        default: 'qa'
+        default: 'staging'
       tag:
         description: 'Tag to filter tests'
         required: true
