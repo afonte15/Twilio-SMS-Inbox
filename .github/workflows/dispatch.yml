@@ -8,7 +8,10 @@ on:
       environment:
         description: 'Environment to run the tests against'
         required: true
-        type: string
+        type: choice
+        options:
+          - qa
+          - staging
         default: 'qa'
       tag:
         description: 'Tag to filter tests'
@@ -38,11 +41,11 @@ jobs:
   dispatch-playwright-tests:
     uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
     with:
-      environment: ${{ inputs.environment }}
-      tag: ${{ inputs.tag }}
-      playwright_repo: ${{ inputs.playwright_repo }}
-      playwright_repo_ref: ${{ inputs.playwright_repo_ref }}
-      run_command: ${{ inputs.run_command }}
+      tag: ${{ github.event.inputs.tag}}
+      playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo'}}
+      playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main'}}
+      environment: ${{ github.event.inputs.environment }}
+      run_command: ${{ github.event.inputs.run_command }}
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
