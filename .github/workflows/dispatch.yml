@@ -41,11 +41,11 @@ jobs:
   dispatch-playwright-tests:
     uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
     with:
-      tag: ${{ github.event.inputs.tag}}
-      playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo'}}
-      playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main'}}
-      environment: ${{ github.event.inputs.environment }}
-      run_command: ${{ github.event.inputs.run_command }}
+      tag: ${{ github.event.inputs.tag || 'e2e' }}
+      playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo' }}
+      playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main' }}
+      environment: ${{ github.event.inputs.environment || 'qa' }}
+      run_command: ${{ github.event.inputs.run_command || 'npx playwright test' }}
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
