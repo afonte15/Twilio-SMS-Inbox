@@ -36,22 +36,16 @@ permissions:
 
 jobs:
     dispatch-playwright-tests:
-      runs-on: ubuntu-latest
-      env:
+      uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+      with:
         tag: ${{ github.event.inputs.tag }}
         playwright_repo: ${{ github.event.inputs.playwright_repo }}
         playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
+        environment: ${{ github.event.inputs.environment }}
+        run_command: ${{ github.event.inputs.run_command }}
+      secrets:
         REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
         QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
         QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
         STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
         STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }}
-      steps:
-        - name: Run Playwright Tests
-          uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
-          with:
-            tag: ${{ env.tag }}
-            playwright_repo: ${{ env.playwright_repo }}
-            playwright_repo_ref: ${{ env.playwright_repo_ref }}
-            environment: ${{ env.environment }}
-            run_command: ${{ env.run_command }}
