@@ -19,7 +19,7 @@ on:
         description: 'Playwright Automation Repository'
         required: true
         type: string
-        default: 'afonte15/playwright-automation'
+        default: 'afonte15/playwright-demo'
       playwright_repo_ref:
         description: 'Branch or commit to use in the Playwright repository'
         required: false
