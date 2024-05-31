@@ -47,4 +47,4 @@ jobs:
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
       QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
       STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
-      STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }
+      STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }}
