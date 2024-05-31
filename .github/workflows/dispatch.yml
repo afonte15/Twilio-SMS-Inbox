@@ -8,10 +8,7 @@ on:
       environment:
         description: 'Environment to run the tests against'
         required: true
-        type: choice
-        options:
-          - qa
-          - staging
+        type: string
         default: 'qa'
       tag:
         description: 'Tag to filter tests'
@@ -33,29 +30,31 @@ on:
         required: true
         type: string
         default: 'npx playwright test'
-  workflow_call:
-          inputs:
-            environment:
-              description: 'Environment to rollout to. QA is default'
-              type: string
-              required: true
-              default: 'qa'
 
 permissions:
   contents: write
 
 jobs:
-  dispatch-playwright-tests:
-    uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
-    with:
-      tag: ${{ github.event.inputs.tag || 'e2e' }}
-      playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo' }}
-      playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main' }}
-      environment: ${{ github.event.inputs.environment || 'qa' }}
-      run_command: ${{ github.event.inputs.run_command || 'npx playwright test' }}
-    secrets:
-      REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
-      QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
-      QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
-      STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
-      STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }}
+    dispatch-playwright-tests:
+      runs-on: ubuntu-latest
+      env:
+        tag: ${{ github.event.inputs.tag }}
+        playwright_repo: ${{ github.event.inputs.playwright_repo }}
+        playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
+        environment: ${{ github.event.inputs.environment }}
+        run_command: ${{ github.event.inputs.run_command }}
+      steps:
+        - name: Run Playwright Tests
+          uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+          with:
+            tag: ${{ env.tag }}
+            playwright_repo: ${{ env.playwright_repo }}
+            playwright_repo_ref: ${{ env.playwright_repo_ref }}
+            environment: ${{ env.environment }}
+            run_command: ${{ env.run_command }}
+          env:
+            REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+            QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
+            QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
+            STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+            STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }}
