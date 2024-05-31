@@ -41,6 +41,7 @@ jobs:
       playwright_repo: ${{ github.event.inputs.playwright_repo }}
       playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
       environment: ${{ github.event.inputs.environment }}
+      run_command: ${{ inputs.run_command }}
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
