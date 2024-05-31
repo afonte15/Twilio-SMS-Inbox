@@ -41,7 +41,6 @@ jobs:
         tag: ${{ github.event.inputs.tag }}
         playwright_repo: ${{ github.event.inputs.playwright_repo }}
         playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref }}
-        environment: ${{ github.event.inputs.environment }}
         run_command: ${{ github.event.inputs.run_command }}
       secrets:
         REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
