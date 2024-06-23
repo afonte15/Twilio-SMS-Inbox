@@ -1,51 +1,37 @@
-name: Dispatch Playwright Tests
-
+name: Dispatch to Playwright Automation Repo
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to run the tests against'
+        description: 'Select the environment'
         required: true
-        type: string
-        default: 'staging'
-      tag:
-        description: 'Tag to filter tests'
+        default: 'qa'
+        type: choice
+        options:
+          - qa
+          - staging
+          - production
+      tags:
+        description: 'Select the test tag'
         required: true
-        type: string
-        default: 'e2e'
-      playwright_repo:
-        description: 'Playwright Automation Repository'
-        required: true
-        type: string
-        default: 'afonte15/playwright-demo'
-      playwright_repo_ref:
-        description: 'Branch or commit to use in the Playwright repository'
-        required: false
-        type: string
-        default: 'main'
-      run_command:
-        description: 'Command to run the Playwright tests'
-        required: true
-        type: string
-        default: 'npx playwright test'
-
-permissions:
-  contents: write
+        default: '@e2e'
+        type: choice
+        options:
+          - '@e2e'
+          - '@smoke'
+          - '@regression'
 
 jobs:
-    dispatch-playwright-tests:
-      uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Dispatch to Playwright Automation Repo
+      uses: afonte15/playwright-cicd@main
       with:
-        tag: ${{ github.event.inputs.tag || 'e2e' }}
-        environment: ${{ github.event.inputs.environment || 'staging' }}
-        playwright_repo: ${{ github.event.inputs.playwright_repo || 'afonte15/playwright-demo' }}
-        playwright_repo_ref: ${{ github.event.inputs.playwright_repo_ref || 'main' }}
-        run_command: ${{ github.event.inputs.run_command || 'npx playwright test' }}
-      secrets:
-        REPO_GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
-        QA_BASE_URL: ${{ secrets.QA_BASE_URL }}
-        QA_ENVIRONMENT: ${{ secrets.QA_ENVIRONMENT }}
-        STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
-        STAGING_ENVIRONMENT: ${{ secrets.STAGING_ENVIRONMENT }}
+        repo: 'afonte15/playwright-demo'
+        event-type: 'run-tests'
+        client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
