@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Dispatch to Playwright Automation Repo
       uses: afonte15/playwright-cicd@main
@@ -34,4 +34,3 @@ jobs:
         repo: 'afonte15/playwright-demo'
         event-type: 'run-tests'
         client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
