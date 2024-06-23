@@ -1,19 +1,37 @@
-name: Dispatch Playwright Tests
-
+name: Dispatch to Playwright Automation Repo
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - qa
+          - staging
+          - production
+      tags:
+        description: 'Select the test tag'
+        required: true
+        default: '@e2e'
+        type: choice
+        options:
+          - '@e2e'
+          - '@smoke'
+          - '@regression'
 
 jobs:
-  dispatch-playwright-tests:
+  dispatch:
     runs-on: ubuntu-latest
     steps:
-    - name: Run Playwright Tests
-      uses: afonte15/playwright-cicd/.github/workflows/run-tagged-tests.yml@main
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Dispatch to Playwright Automation Repo
+      uses: afonte15/playwright-cicd@main
       with:
-        tag: 'e2e'
-        playwright_repo: 'afonte15/playwright-demo'
-        playwright_repo_ref: 'main'
-        run_command: 'npx playwright test --grep @'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        repo: 'afonte15/playwright-demo'
+        event-type: 'run-tests'
+        client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
