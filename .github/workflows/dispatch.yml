@@ -31,10 +31,10 @@ jobs:
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
-              owner: 'afonte15',  # Replace with the owner of Repo B
-              repo: 'playwright-demo',  # Replace with the name of Repo B
-              workflow_id: 'dispatched-tests.yml',  # The name of the workflow file in Repo B
-              ref: 'main',  # The branch to run the workflow on
+              owner: 'afonte15', 
+              repo: 'playwright-demo',
+              workflow_id: 'dispatched-tests.yml',
+              ref: 'main',
               inputs: {
                 environment: '${{ github.event.inputs.environment }}',
                 tags: '${{ github.event.inputs.tags }}'
