@@ -27,7 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create test config file
-        run: echo "{\"environment\": \"${{ github.event.inputs.environment }}\", \"tags\": \"${{ github.event.inputs.tags }}\"}" > test-config.json
+        run: |
+          echo '{"environment": "${{ github.event.inputs.environment }}", "tags": "${{ github.event.inputs.tags }}"}' > test-config.json
 
       - name: Upload test config
         uses: actions/upload-artifact@v2
