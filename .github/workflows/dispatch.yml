@@ -1,4 +1,4 @@
-name: Upload Test Configuration
+name: Create Workflow Dispatch
 
 on:
   workflow_dispatch:
@@ -23,15 +23,20 @@ on:
           - '@regression'
 
 jobs:
-  upload:
+  dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Create test config file
-        run: |
-          echo '{"environment": "${{ github.event.inputs.environment }}", "tags": "${{ github.event.inputs.tags }}"}' > test-config.json
-
-      - name: Upload test config
-        uses: actions/upload-artifact@v2
+      - name: Trigger Workflow in Another Repo
+        uses: actions/github-script@v6
         with:
-          name: test-config
-          path: test-config.json
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: 'afonte15',  # Replace with the owner of Repo B
+              repo: 'playwright-demo',  # Replace with the name of Repo B
+              workflow_id: 'run-playwright-tests.yml',  # The name of the workflow file in Repo B
+              ref: 'main',  # The branch to run the workflow on
+              inputs: {
+                environment: '${{ github.event.inputs.environment }}',
+                tags: '${{ github.event.inputs.tags }}'
+              }
+            })
