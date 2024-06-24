@@ -32,7 +32,7 @@ jobs:
     - name: Dispatch to Playwright Automation Repo
       uses: afonte15/playwright-cicd@main
       with:
-        repo: 'your-org/repoB'
+        repo: 'afonte15/playwright-demo'
         event-type: 'run-tests'
         client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
         
