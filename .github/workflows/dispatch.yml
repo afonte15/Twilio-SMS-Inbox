@@ -30,7 +30,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Dispatch to Playwright Automation Repo
-      uses: afonte15/playwright-cicd@main
+      uses: 'afonte15/playwright-cicd@main'
       with:
         repo: 'afonte15/playwright-demo'
         event-type: 'run-tests'
