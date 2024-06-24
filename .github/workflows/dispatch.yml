@@ -34,3 +34,4 @@ jobs:
         repo: 'afonte15/playwright-demo'
         event-type: 'run-tests'
         client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
