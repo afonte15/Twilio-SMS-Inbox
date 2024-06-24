@@ -1,4 +1,4 @@
-name: Dispatch to Playwright Automation Repo
+name: Upload Test Configuration
 
 on:
   workflow_dispatch:
@@ -23,18 +23,14 @@ on:
           - '@regression'
 
 jobs:
-  dispatch:
+  upload:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
+      - name: Create test config file
+        run: echo "{\"environment\": \"${{ github.event.inputs.environment }}\", \"tags\": \"${{ github.event.inputs.tags }}\"}" > test-config.json
 
-    - name: Dispatch to Playwright Automation Repo
-      uses: 'afonte15/playwright-cicd@main'
-      with:
-        repo: 'afonte15/playwright-demo'
-        event-type: 'run-tests'
-        client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+      - name: Upload test config
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-config
+          path: test-config.json
