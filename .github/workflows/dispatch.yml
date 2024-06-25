@@ -1,4 +1,4 @@
-name: Create Workflow Dispatch
+name: Dispatch to Playwright Automation Repo
 
 on:
   workflow_dispatch:
@@ -22,21 +22,19 @@ on:
           - '@smoke'
           - '@regression'
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Workflow in Another Repo
-        uses: actions/github-script@v6
+      - name: Dispatch to Playwright Automation Repo
+        uses: afonte15/playwright-cicd@v1.0.0
         with:
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: 'afonte15', 
-              repo: 'playwright-demo',
-              workflow_id: 'dispatched-tests.yml',
-              ref: 'main',
-              inputs: {
-                environment: '${{ github.event.inputs.environment }}',
-                tags: '${{ github.event.inputs.tags }}'
-              }
-            })
+          repo: 'afonte15/playwright-automation' 
+          event-type: 'run-tests'  
+          client-payload: '{"env": "${{ github.event.inputs.environment }}", "grep": "${{ github.event.inputs.tags }}"}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
