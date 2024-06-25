@@ -2,6 +2,10 @@ name: Test Public GitHub Action
 
 on: [push]
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   test_action_job:
     runs-on: ubuntu-latest
@@ -12,14 +16,29 @@ jobs:
 
       - name: Test Dispatch Action
         id: dispatch
-        uses: afonte15/plawywright-cicd@main
+        uses: afonte15/playwright-cicd@main
         with:
           repo: 'afonte15/playwright-demo'
           event-type: 'run-tests'
           client-payload: '{"env": "qa", "grep": "@e2e"}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-     
+        continue-on-error: true
+
+      - name: Capture Output
+        if: always()  
+        run: |
+            echo "Response: ${{ steps.dispatch.outputs.response }}"
+
+      - name: Debug Info
+        if: always() 
+        run: |
+          echo "Debugging Information"
+          echo "Repo: afonte15/playwright-demo"
+          echo "Event Type: run-tests"
+          echo "Client Payload: {\"env\": \"qa\", \"grep\": \"@e2e\"}"
+          echo "Response: ${{ steps.dispatch.outputs.response }}"
+
       - name: Get the dispatch result
+        if: always() 
         run: echo "The dispatch response is ${{ steps.dispatch.outputs.response }}"
