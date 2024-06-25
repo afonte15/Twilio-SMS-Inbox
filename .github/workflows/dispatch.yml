@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch to Playwright Automation Repo
-        uses: afonte15/playwright-cicd@v1.0.0
+        uses: afonte15/playwright-cicd@vmain
         with:
           repo: 'afonte15/playwright-automation' 
           event-type: 'run-tests'  
