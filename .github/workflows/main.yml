@@ -12,7 +12,7 @@ jobs:
 
       - name: Test Dispatch Action
         id: dispatch
-        uses: afonte15/plawywright-cicd@main
+        uses: afonte15/playwright-cicd@main
         with:
           repo: 'afonte15/playwright-demo'
           event-type: 'run-tests'
